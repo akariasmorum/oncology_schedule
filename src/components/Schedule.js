@@ -7,6 +7,7 @@ import './Schedule.css';
 import AddMedicineModal from './addMedicineModal.js';
 import Button from 'react-bootstrap/Button';
 import LogLifecyle from 'react-log-lifecycle';
+import Cell from './Cell.js';
 
 const flags = {
     // If logType is set to keys then the props of the object being logged
@@ -159,11 +160,14 @@ export default class Schedule extends LogLifecyle{
     createBody(){
         //console.log(this.state.rows);
         let rows = [];
+        //difference between max_date and min_date in minutes
+        const time_difference = moment.duration(this.state.max_date.diff(this.state.min_date)).asMinutes()
         for(var i=0; i<this.state.rows.length; i++){
             let row = [];
             row.push(<th>{this.state.rows[i]}</th>);
-            row.push(<td>x</td>);
-            row.push(<td>x</td>);
+            for(var i=0;i<=time_difference / this.props.delta; i++)
+                row.push(<Cell />);
+            
             rows.push(<tr>{row}</tr>);
         }
         //console.log(rows);
