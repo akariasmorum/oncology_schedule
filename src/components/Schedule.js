@@ -157,18 +157,15 @@ export default class Schedule extends React.Component{
        });
     }
 
-    createBody(){
-        
+    createBody(){        
         let rows = [];
         //difference between max_date and min_date in minutes
         const time_difference = moment.duration(this.state.max_date.diff(this.state.min_date)).asMinutes()
-        console.log(time_difference);
-        console.log(time_difference / this.props.delta);
         for(var i=0; i<this.state.rows.length; i++){
             
             let row = [];
             row.push(<th>{this.state.rows[i]}</th>);
-            for(var j=0;j<=time_difference / this.props.delta; j++)
+            for(var j=0;j<=Math.ceil(time_difference / this.props.delta); j++)
                 row.push(<Cell />);
             
             rows.push(<tr>{row}</tr>);
