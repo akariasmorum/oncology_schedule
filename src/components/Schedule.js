@@ -19,10 +19,10 @@ const flags = {
     names: ['props', 'nextProps', 'nextState', 'prevProps', 'prevState']
   };
 
-export default class Schedule extends LogLifecyle{
+export default class Schedule extends React.Component{
 
     constructor(props){
-        super(props, flags);
+        super(props);
         //console.log('Schedule constructor props\n' + props.delta);
         this.state = {
             min_date: moment().hour(11).minutes(15),
@@ -158,14 +158,17 @@ export default class Schedule extends LogLifecyle{
     }
 
     createBody(){
-        //console.log(this.state.rows);
+        
         let rows = [];
         //difference between max_date and min_date in minutes
         const time_difference = moment.duration(this.state.max_date.diff(this.state.min_date)).asMinutes()
+        console.log(time_difference);
+        console.log(time_difference / this.props.delta);
         for(var i=0; i<this.state.rows.length; i++){
+            
             let row = [];
             row.push(<th>{this.state.rows[i]}</th>);
-            for(var i=0;i<=time_difference / this.props.delta; i++)
+            for(var j=0;j<=time_difference / this.props.delta; j++)
                 row.push(<Cell />);
             
             rows.push(<tr>{row}</tr>);
